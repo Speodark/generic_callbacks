@@ -1,0 +1,43 @@
+.binary-filter {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #DDE4EB;
+    border-radius: 25px;
+    display: flex;
+    // This part is for the checkbox to be on top of everything else
+    &__checklist {
+        position: absolute;
+    }
+    &__checkbox {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 1;
+    }
+    // The items
+    &__item {
+        width: 50%;
+        height: 100%;
+        font-size: 1.8rem;
+        font-weight: 600;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        &--1 {
+            border-radius: 2.5rem 0px 0px 2.5rem;
+        }
+        &--2 {
+            border-radius: 0px 2.5rem 2.5rem 0px;
+        }
+    }
+
+    &__slider {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        border-radius: 25px;
+        background-color: transparent;
+        
+    }
+}

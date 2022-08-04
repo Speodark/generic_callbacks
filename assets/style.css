@@ -1,0 +1,191 @@
+/*
+0 - 600px: phone
+600 - 900px: Tablet portrait
+900 - 1200px: Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + : Big desktop
+
+$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+1em = 16px
+
+ORDER: BASE + typography > general layout + grid > page layout > components
+*/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 62.5%; }
+  @media only screen and (max-width: 75em) {
+    html {
+      font-size: 56.25%; } }
+  @media only screen and (max-width: 56.25em) {
+    html {
+      font-size: 50%; } }
+  @media only screen and (min-width: 112.5em) {
+    html {
+      font-size: 75%; } }
+
+body {
+  box-sizing: border-box;
+  min-height: 100vh; }
+
+.container {
+  height: 100vh;
+  background-color: #F3F3F3; }
+
+.center_items_vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.fill-parent-div {
+  width: 100%;
+  height: 100%; }
+
+.sm-padding {
+  padding: 1rem; }
+
+.hide {
+  display: none; }
+
+.invisible {
+  opacity: 0; }
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px; }
+  .arrow__right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg); }
+  .arrow__left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg); }
+  .arrow__up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg); }
+  .arrow__down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg); }
+
+.card {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+  border-radius: 2rem;
+  overflow: hidden; }
+  .card__header {
+    font-size: inherit;
+    padding: 1rem 0 0;
+    display: flex;
+    align-items: center; }
+
+.DateRangePicker, .DateRangePickerInput__withBorder {
+  background-color: #DDE4EB;
+  border: 1px solid #BFCCDA; }
+
+.DateInput_input {
+  background-color: #DDE4EB; }
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .kpi__value {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #001737; }
+  .kpi__text {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #2B80FF; }
+
+.binary-filter {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #DDE4EB;
+  border-radius: 25px;
+  display: flex; }
+  .binary-filter__checklist {
+    position: absolute; }
+  .binary-filter__checkbox {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1; }
+  .binary-filter__item {
+    width: 50%;
+    height: 100%;
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    cursor: pointer; }
+    .binary-filter__item--1 {
+      border-radius: 2.5rem 0px 0px 2.5rem; }
+    .binary-filter__item--2 {
+      border-radius: 0px 2.5rem 2.5rem 0px; }
+  .binary-filter__slider {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    border-radius: 25px;
+    background-color: transparent; }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .header__date-picker-range {
+    flex: 1;
+    width: 100%; }
+  .header__title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700; }
+  .header__export {
+    flex: 1;
+    display: grid;
+    place-items: end; }
+    .header__export--btn {
+      padding: 0.8rem 1.4rem;
+      font-size: 1.6rem;
+      background-color: #DDE4EB;
+      border: none;
+      display: flex;
+      align-items: center; }
+      .header__export--btn:hover {
+        border: 1px solid #2B80FF; }
+    .header__export--arrow {
+      border-color: #2B80FF;
+      margin-left: 0.6rem; }
+
+.sub-header {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 2px solid #dde4eb;
+  padding: 1rem;
+  grid-gap: 1rem; }
+
+.dashboard {
+  height: 100%;
+  width: 100%;
+  font-size: 1.8rem;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 2rem; }

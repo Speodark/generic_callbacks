@@ -1,0 +1,15 @@
+.card {
+    background-color: #fff;
+    // Makes sure the card doesn't overflow from its position on the grid
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+    border-radius: 2rem;
+    overflow: hidden;
+    &__header {
+        font-size: inherit;
+        padding: 1rem 0 0;
+        display: flex;
+        align-items: center;
+    }
+}

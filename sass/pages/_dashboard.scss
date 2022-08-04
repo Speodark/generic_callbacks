@@ -1,0 +1,14 @@
+.dashboard {
+    // take all available space
+    height: 100%;
+    width: 100%;
+    font-size: 1.8rem;
+    // padding all around
+    padding: 2rem;
+
+    // make a grid of 16 by 16
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    grid-gap: 2rem;
+}

@@ -1,0 +1,7 @@
+.sub-header {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border: 2px solid #dde4eb;
+    padding: 1rem;
+    grid-gap: 1rem;
+}
