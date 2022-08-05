@@ -113,6 +113,16 @@ def dashboard():
                 categories=['castrated', 'not castrated'],
                 colors=['green', 'red'],
                 className='sub-header__castrated'
+            ),
+            card(
+                header="age upon outcome",
+                children=dcc.RangeSlider(
+                    min=int(df.age_upon_outcome.min()),
+                    max=int(df.age_upon_outcome.max()),
+                    step=1,
+                    value=[int(df.age_upon_outcome.min()),int(df.age_upon_outcome.max())],
+                    id={'type':'range_slider','id':'age_upon_outcome'}, 
+                )
             )
         ]
     )

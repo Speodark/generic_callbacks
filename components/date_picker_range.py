@@ -10,7 +10,7 @@ def date_picker_range(df, id):
         id={'type': 'date_picker_range', 'id': id},
         calendar_orientation='horizontal',  # vertical or horizontal
         day_size=39,  # size of calendar image. Default is 39
-        end_date_placeholder_text="Return",  # text that appears when no end date chosen
+        # end_date_placeholder_text="Return",  # text that appears when no end date chosen
         with_portal=False,  # if True calendar will open in a full screen overlay portal
         first_day_of_week=0,  # Display of calendar when open (0 = Sunday)
         reopen_calendar_on_clear=True,

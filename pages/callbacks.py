@@ -43,8 +43,7 @@ def filter_by_bar_chart(df, data, active_id = None):
                 # filtering the dataframe by the bar charts
                 df = df[df[column_name].isin(categories)]
     return df
-
-
+# Create bar charts outputs
 def create_bar_chart_figures(dfs, data):
     bar_charts = []
     for bar_chart_id in dfs.keys():
@@ -86,8 +85,6 @@ def filter_by_date_picker_range(df, data, active_id = None):
                 (df[column_name]<=end_date)
             ]
     return df
-
-
 # Create date_picker_range outputs
 def create_dpr_output(dfs, data):
     """
@@ -120,22 +117,27 @@ def create_dpr_output(dfs, data):
 
     return start_dates, end_dates, min_date_alloweds, max_date_alloweds, initial_visible_months
 ##################################################### END
+
+
 ##################################################### Range sliders
 # filtering by the range slider value
 def filter_by_range_slider(df, data, active_id = None):
-    # # going through all the range sliders ids
-    # for index, range_slider_id in enumerate(ids):
-    #     # checking if the value is not none
-    #     if range_sliders_data[index][0] is not None and range_sliders_data[index][1] is not None:
-    #         # filtering the dataframe by the range slider value
-    #         filtered_df = filtered_df[
-    #             (filtered_df[range_slider_id] >= range_sliders_data[index][0]) &
-    #             (filtered_df[range_slider_id] <= range_sliders_data[index][1])
-    #         ]
+    for filter_id in data.keys():
+        if filter_id != active_id:
+            column_name = ast.literal_eval(filter_id)['id']
+            # checking if the value is not none
+            value = data[filter_id]['value']
+            if value[0] is not None and value[1] is not None:
+                # filtering the dataframe by the range slider value
+                df = df[
+                    (df[column_name] >= value[0]) &
+                    (df[column_name] <= value[1])
+                ]
     return df
 
-
+# Create the range sliders outputs
 def create_range_sliders(dfs, data):
+    print(data)
     range_sliders_minimums = []
     range_sliders_maximums = []
     for range_slider_id in dfs.keys():
