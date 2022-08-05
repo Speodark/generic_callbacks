@@ -28,10 +28,10 @@ def date_picker_range(df, id):
         # how calendar headers are displayed when the calendar is opened.
         month_format='MMMM, YYYY',
         minimum_nights=2,  # minimum number of days between start and end date
-        persistence=True,
-        persisted_props=['start_date'],
-        persistence_type='session',  # session, local, or memory. Default is 'local'
-        # singledate or bothdates. Determines when callback is triggered
+        # persistence=True,
+        # persisted_props=['start_date', 'end_date'],
+        # persistence_type='session',  # session, local, or memory. Default is 'local'
+        # # singledate or bothdates. Determines when callback is triggered
         updatemode='singledate',
         stay_open_on_select=True,
         className='header__date-picker-range'
