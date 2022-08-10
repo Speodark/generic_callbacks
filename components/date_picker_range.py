@@ -1,13 +1,14 @@
 import pandas as pd
 from dash import dcc
+import uuid
 
-
-def date_picker_range(df, id):
+def date_picker_range(df, column_name, id=None):
+    id = str(uuid.uuid4()) if not id else id
     min_date, max_date = pd.to_datetime(
-        df[id].min()), pd.to_datetime(df[id].max())
+        df[column_name].min()), pd.to_datetime(df[column_name].max())
     return dcc.DatePickerRange(
         # ID to be used for callback
-        id={'type': 'date_picker_range', 'id': id},
+        id={'type': 'date_picker_range', 'column_name':column_name, 'id': id},
         calendar_orientation='horizontal',  # vertical or horizontal
         day_size=39,  # size of calendar image. Default is 39
         # end_date_placeholder_text="Return",  # text that appears when no end date chosen

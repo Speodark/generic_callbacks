@@ -1,5 +1,6 @@
 import plotly.express as px
 from dash import dcc
+import uuid
 
 def stacked_bar_chart_figure(df, x_axis, y_axis, category):
     fig = px.bar(
@@ -37,7 +38,8 @@ def stacked_bar_chart_figure(df, x_axis, y_axis, category):
 
 
 
-def stacked_bar_chart(x_axis, y_axis, category, df, agg='count'):
+def stacked_bar_chart(x_axis, y_axis, category, df, id=None, agg='count'):
+    id = str(uuid.uuid4()) if not id else id
     df = df.groupby([category, x_axis],agg=agg).to_pandas_df()
     return dcc.Graph(
         figure=stacked_bar_chart_figure(
@@ -48,5 +50,5 @@ def stacked_bar_chart(x_axis, y_axis, category, df, agg='count'):
         ),
         responsive=True, 
         className="fill-parent-div sm-padding",
-        id = {'type':'stacked_bar_chart','id':category, 'x_axis':x_axis, 'y_axis':y_axis, 'agg':agg}
+        id = {'type':'stacked_bar_chart','id':id, 'column_name':category, 'x_axis':x_axis, 'y_axis':y_axis, 'agg':agg}
     )

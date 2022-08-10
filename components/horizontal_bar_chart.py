@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 from dash import dcc
+import uuid
 
 
 def horizontal_bar_chart_figure(values, categories, title=None, selected_points=None):
@@ -22,15 +23,16 @@ def horizontal_bar_chart_figure(values, categories, title=None, selected_points=
     return fig
 
 
-def horizontal_bar_chart(category_name, value_by, df, agg='count', title=None):
-    df = df.groupby([category_name],agg=agg).to_pandas_df()
+def horizontal_bar_chart(categories, value_by, df, id=None, agg='count', title=None):
+    id = str(uuid.uuid4()) if not id else id
+    df = df.groupby([categories],agg=agg).to_pandas_df()
     df = df.sort_values(by=[value_by])
     return dcc.Graph(
         figure=horizontal_bar_chart_figure(
-            categories=df[category_name],
+            categories=df[categories],
             values=df[value_by],
         ),
         responsive=True, 
         className="fill-parent-div sm-padding",
-        id = {'type':'bar_chart','id':category_name, 'value_by':value_by, 'agg':agg}
+        id = {'type':'bar_chart', 'id':id, 'column_name':categories, 'value_by':value_by, 'agg':agg}
     )

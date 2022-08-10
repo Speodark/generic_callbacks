@@ -9,66 +9,11 @@ from components import (
     horizontal_bar_chart,
     stacked_bar_chart,
     date_picker_range,
-    binary_filter
+    binary_filter,
+    kpi
 )
 from pages.callbacks import *
-
-
-# The overview tab
-def overview_tab(df):
-    return html.Div(
-        children=[
-            # Outcome graph
-            card(
-                header='Outcome',
-                children=horizontal_bar_chart(
-                    category_name='outcome_type',
-                    value_by='count',
-                    df=df
-                ),
-                className="dashboard__overview--outcome center_items_vertical"
-            ),
-            # Animal Type graph
-            card(
-                header='Animal Type',
-                children=horizontal_bar_chart(
-                    category_name='animal_type',
-                    value_by='count',
-                    df=df
-                ),
-                className="dashboard__overview--animal-type center_items_vertical"
-            ),
-            # Animal Type graph
-            card(
-                header='Amount of outcome by Type and Date',
-                children=stacked_bar_chart(
-                    x_axis='datetime',
-                    y_axis='count',
-                    category='outcome_type',
-                    df=df
-                ),
-                className="dashboard__overview--outcome-time center_items_vertical"
-            ),
-            # Age slider
-            html.Div(
-                children=[
-                    html.Span("Age upon outcome Range"),
-                    dcc.RangeSlider(
-                        min=int(df.age_upon_outcome.min()),
-                        max=int(df.age_upon_outcome.max()),
-                        step=1,
-                        value=[int(df.age_upon_outcome.min()),
-                               int(df.age_upon_outcome.max())],
-                        id={'type': 'range_slider', 'id': 'age_upon_outcome'},
-                        className="dashboard__overview--age-range__slider"
-                    )
-                ],
-                className="dashboard__overview--age-range"
-            )
-
-        ],
-        className='dashboard__overview'
-    )
+import uuid
 
 
 def dashboard():
@@ -76,18 +21,24 @@ def dashboard():
     return html.Div(
         className='dashboard',
         children=[
-            card(
-                children=date_picker_range(df, 'datetime'),
-                className='dashboard__datetime'
+            kpi(
+                text='Animal Count', 
+                value=len(df),
+                className='sub-header__animal-count',
+                kpi_name = 'animal_count'
             ),
-            card(
-                children=date_picker_range(df, 'date_of_birth'),
-                className='dashboard__date_of_birth'
+            kpi(
+                text='Adopted', 
+                value=len(df[df.outcome_type == 'Adoption']),
+                className='sub-header__adopted',
+                kpi_name = 'adopted'
             ),
+            date_picker_range(df, column_name='datetime'),
+            date_picker_range(df, column_name='date_of_birth'),
             card(
                 header='Animal Type',
                 children=horizontal_bar_chart(
-                    category_name='animal_type',
+                    categories='animal_type',
                     value_by='count',
                     df=df
                 ),
@@ -96,20 +47,20 @@ def dashboard():
             card(
                 header='Outcome',
                 children=horizontal_bar_chart(
-                    category_name='outcome_type',
+                    categories='outcome_type',
                     value_by='count',
                     df=df
                 ),
                 className="dashboard__outcome center_items_vertical"
             ),
             binary_filter(
-                id='sex',
+                column_name='sex',
                 categories=['Male', 'Female'],
                 colors=['pink', '#2B80FF'],
                 className='sub-header__gender'
             ),
             binary_filter(
-                id='castrated',
+                column_name='castrated',
                 categories=['castrated', 'not castrated'],
                 colors=['green', 'red'],
                 className='sub-header__castrated'
@@ -121,7 +72,7 @@ def dashboard():
                     max=int(df.age_upon_outcome.max()),
                     step=1,
                     value=[int(df.age_upon_outcome.min()),int(df.age_upon_outcome.max())],
-                    id={'type':'range_slider','id':'age_upon_outcome'}, 
+                    id={'type':'range_slider','id':str(uuid.uuid4()), 'column_name':'age_upon_outcome'}, 
                 )
             )
         ]
