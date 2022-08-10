@@ -39,8 +39,8 @@ body {
   min-height: 100vh; }
 
 .container {
-  height: 100vh;
-  background-color: #F3F3F3; }
+  height: 150vh;
+  background-color: #f3f3f3; }
 
 .center_items_vertical {
   display: flex;
