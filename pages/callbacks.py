@@ -192,6 +192,30 @@ def create_kpi(dfs, data):
 
 ##################################################### END
 
+##################################################### stacked bar chart
+# create the kpi outputs
+def create_stacked_bar_chart(dfs, data):
+    stacked_bar_charts = []
+    for chart_id in dfs.keys():
+        full_id = ast.literal_eval(chart_id)
+        column_name = full_id["column_name"]
+        agg_function = full_id["agg"]
+        x_axis = full_id["x_axis"]
+        y_axis = full_id["y_axis"]
+        # Getting the dataframe ready for the chart
+        dfs[chart_id] = dfs[chart_id].groupby(
+            [column_name, x_axis], agg=agg_function
+        ).to_pandas_df()
+
+        stacked_bar_charts.append(
+            stacked_bar_chart_figure(
+                df=dfs[chart_id], x_axis=x_axis, y_axis=y_axis, category=column_name
+            )
+        )
+    return stacked_bar_charts
+
+
+##################################################### END
 
 # for each type we have a filtering function
 type_filter_functions = {
@@ -208,6 +232,7 @@ output_type_functions = {
     "bar_chart": create_bar_chart_figures,
     "range_slider": create_range_sliders,
     "kpi": create_kpi,
+    "stacked_bar_chart": create_stacked_bar_chart,
 }
 
 
@@ -235,6 +260,18 @@ output_type_functions = {
             "id": ALL,
             "column_name": ALL,
             "value_by": ALL,
+            "agg": ALL,
+        },
+        "figure",
+    ),
+    # stacked_bar_charts outputs
+    Output(
+        {
+            "type": "stacked_bar_chart",
+            "id": ALL,
+            "column_name": ALL,
+            "x_axis": ALL,
+            "y_axis": ALL,
             "agg": ALL,
         },
         "figure",
@@ -357,6 +394,8 @@ def dashboard_update(*args):
     # for each input type we go over all input types again and filter by them except for the current input_type.
     filtered_df = df
     individual_filtered_df = {}
+
+
     for component_type in type_list:
         # handling component type that have an output but not an input (means it doesn't filter!)
         if component_type not in type_filter_functions.keys():
@@ -365,6 +404,7 @@ def dashboard_update(*args):
             # for each different input component in that specific type create a key and copy the filtered_df
             for key in type_dict[component_type].keys():
                 individual_filtered_df[component_type][key] = filtered_df
+                    
         else:
             # checking the input has an output if it does then we need to create a df for each component in the type
             # and filter all of the exsisting dfs
@@ -395,6 +435,7 @@ def dashboard_update(*args):
             filtered_df = type_filter_functions[component_type](
                 df=filtered_df, data=type_dict[component_type]
             )
+
 
     # Creating the outputs list
     outputs = []
