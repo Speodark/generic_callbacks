@@ -5,6 +5,8 @@ import dash
 from dash import Input, Output, ALL, State, MATCH, ctx, no_update
 from dash.exceptions import PreventUpdate
 from components import horizontal_bar_chart_figure, stacked_bar_chart_figure
+from pprint import pprint
+import itertools
 
 df = vaex.open("assets/data/data.hdf5")
 
@@ -306,9 +308,7 @@ output_type_functions = {
 )
 def dashboard_update(*args):
     # Get a list of all the types
-    types = list(
-        set(list(type_filter_functions.keys()) + list(output_type_functions.keys()))
-    )
+    types = set(list(type_filter_functions.keys()) + list(output_type_functions.keys()))
     # Create a dictionary with type as a key and empty dict as a value
     type_dict = {key: {} for key in types}
 
@@ -323,16 +323,17 @@ def dashboard_update(*args):
     #   }
     # }
     for callback_input_index, callback_input in enumerate(ctx.inputs_list):
-        for input_id_index, input_id in enumerate(callback_input):
-            try:
-                type_dict[input_id["id"]["type"]][str(input_id["id"])][
-                    input_id["property"]
-                ] = args[callback_input_index][input_id_index]
-            except:
-                type_dict[input_id["id"]["type"]][str(input_id["id"])] = {
-                    input_id["property"]: args[callback_input_index][input_id_index]
-                }
+        # If we have components.
+        if callback_input:
+            for input_id_index, input_id in enumerate(callback_input):
+                if type_dict[input_id["id"]["type"]].get(str(input_id["id"]), None) is not None:
+                    type_dict[input_id["id"]["type"]][str(input_id["id"])][input_id["property"]] = args[callback_input_index][input_id_index]
+                else:
+                    type_dict[input_id["id"]["type"]][str(input_id["id"])] = {
+                        input_id["property"]: args[callback_input_index][input_id_index]
+                    }
 
+    pprint(type_dict)
     # adds dictionaries of all outputs type and values that doesn't have an input to the type_dict
     # the value is null because there are no args for output
     # save the list for optimization later
