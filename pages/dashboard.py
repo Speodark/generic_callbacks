@@ -18,20 +18,20 @@ def dashboard():
     return html.Div(
         className="dashboard",
         children=[
-            kpi(
-                text="Animal Count",
-                value=len(df),
-                className="sub-header__animal-count",
-                kpi_name="animal_count",
-            ),
-            kpi(
-                text="Adopted",
-                value=len(df[df.outcome_type == "Adoption"]),
-                className="sub-header__adopted",
-                kpi_name="adopted",
-            ),
-            date_picker_range(df, column_name="datetime"),
-            date_picker_range(df, column_name="date_of_birth"),
+            # kpi(
+            #     text="Animal Count",
+            #     value=len(df),
+            #     className="sub-header__animal-count",
+            #     kpi_name="animal_count",
+            # ),
+            # kpi(
+            #     text="Adopted",
+            #     value=len(df[df.outcome_type == "Adoption"]),
+            #     className="sub-header__adopted",
+            #     kpi_name="adopted",
+            # ),
+            # date_picker_range(df, column_name="datetime"),
+            # date_picker_range(df, column_name="date_of_birth"),
             card(
                 header="Animal Type",
                 children=horizontal_bar_chart(
@@ -46,41 +46,41 @@ def dashboard():
                 ),
                 className="dashboard__outcome center_items_vertical",
             ),
-            binary_filter(
-                column_name="sex",
-                categories=["Male", "Female"],
-                colors=["pink", "#2B80FF"],
-                className="sub-header__gender",
-            ),
-            binary_filter(
-                column_name="castrated",
-                categories=["castrated", "not castrated"],
-                colors=["green", "red"],
-                className="sub-header__castrated",
-            ),
-            card(
-                header="age upon outcome",
-                children=dcc.RangeSlider(
-                    min=int(df.age_upon_outcome.min()),
-                    max=int(df.age_upon_outcome.max()),
-                    step=1,
-                    value=[
-                        int(df.age_upon_outcome.min()),
-                        int(df.age_upon_outcome.max()),
-                    ],
-                    id={
-                        "type": "range_slider",
-                        "id": str(uuid.uuid4()),
-                        "column_name": "age_upon_outcome",
-                    },
-                ),
-            ),
-            card(
-                header="Amount of outcome by Type and Date",
-                children=stacked_bar_chart(
-                    x_axis="datetime", y_axis="count", category="outcome_type", df=df
-                ),
-                className="dashboard__overview--outcome-time center_items_vertical",
-            ),
+            # binary_filter(
+            #     column_name="sex",
+            #     categories=["Male", "Female"],
+            #     colors=["pink", "#2B80FF"],
+            #     className="sub-header__gender",
+            # ),
+            # binary_filter(
+            #     column_name="castrated",
+            #     categories=["castrated", "not castrated"],
+            #     colors=["green", "red"],
+            #     className="sub-header__castrated",
+            # ),
+            # card(
+            #     header="age upon outcome",
+            #     children=dcc.RangeSlider(
+            #         min=int(df.age_upon_outcome.min()),
+            #         max=int(df.age_upon_outcome.max()),
+            #         step=1,
+            #         value=[
+            #             int(df.age_upon_outcome.min()),
+            #             int(df.age_upon_outcome.max()),
+            #         ],
+            #         id={
+            #             "type": "range_slider",
+            #             "id": str(uuid.uuid4()),
+            #             "column_name": "age_upon_outcome",
+            #         },
+            #     ),
+            # ),
+            # card(
+            #     header="Amount of outcome by Type and Date",
+            #     children=stacked_bar_chart(
+            #         x_axis="datetime", y_axis="count", category="outcome_type", df=df
+            #     ),
+            #     className="dashboard__overview--outcome-time center_items_vertical",
+            # ),
         ],
     )
