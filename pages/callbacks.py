@@ -2,7 +2,7 @@ import vaex
 import ast
 import pandas as pd
 import dash
-from dash import Input, Output, ALL, State, MATCH, ctx, no_update
+from dash import Input, Output, ALL, ctx, no_update
 from dash.exceptions import PreventUpdate
 from components import horizontal_bar_chart_figure, stacked_bar_chart_figure
 from pprint import pprint

@@ -2,6 +2,8 @@ from whitenoise import WhiteNoise
 import dash
 from dash import html, dcc
 from pages.dashboard import dashboard
+import vaex
+from filter_manager import filter_manager
 
 # Generate the app layout
 def generateAppLayout():
@@ -26,6 +28,10 @@ server.wsgi_app = WhiteNoise(server.wsgi_app, root='assets/')
 app.title = 'Animal Shelter'
 # set the layout
 app.layout = generateAppLayout
+
+df = vaex.open("assets/data/data.hdf5")
+# Starting the filter manager
+filter_manager.start(df)
 # start the app
 if __name__ == "__main__":
     app.run_server(debug=True, port=5050, host="0.0.0.0")

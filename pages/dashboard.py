@@ -8,13 +8,15 @@ from components import (
     date_picker_range,
     binary_filter,
     kpi,
+    range_slider
 )
-from pages.callbacks import *
+# from pages.callbacks import *
 import uuid
+
+df = vaex.open("assets/data/data.hdf5")
 
 
 def dashboard():
-    df = vaex.open("assets/data/data.hdf5")
     return html.Div(
         className="dashboard",
         children=[
@@ -58,23 +60,10 @@ def dashboard():
             #     colors=["green", "red"],
             #     className="sub-header__castrated",
             # ),
-            # card(
-            #     header="age upon outcome",
-            #     children=dcc.RangeSlider(
-            #         min=int(df.age_upon_outcome.min()),
-            #         max=int(df.age_upon_outcome.max()),
-            #         step=1,
-            #         value=[
-            #             int(df.age_upon_outcome.min()),
-            #             int(df.age_upon_outcome.max()),
-            #         ],
-            #         id={
-            #             "type": "range_slider",
-            #             "id": str(uuid.uuid4()),
-            #             "column_name": "age_upon_outcome",
-            #         },
-            #     ),
-            # ),
+            card(
+                header="age upon outcome",
+                children=range_slider('age_upon_outcome', df)
+            ),
             # card(
             #     header="Amount of outcome by Type and Date",
             #     children=stacked_bar_chart(

@@ -2,7 +2,8 @@ from dash import html, dcc
 from dash import Input, Output, ALL, State, MATCH, ctx
 import dash
 import uuid
-
+from filter_manager import filter_manager
+import ast
 
 def binary_filter(column_name, categories, colors, id=None, className = ''):
     id = str(uuid.uuid4()) if not id else id
@@ -58,3 +59,25 @@ def binary_filter_callback(_, active_filter, styles):
             else:
                 styles[index]['filter'] = 'blur(3px)'
         return styles, triggered_category
+
+
+# For filter manager
+@filter_manager.register_filter_functions('binary_filter')
+def filter_by_binary_filters(df, data):
+    # going through all the binary filters ids
+    for key, value in data.items():
+        # checking if the binary filter been activated
+        if value["children"]:
+            # filtering the dataframe by the binary filter
+            filter_id = ast.literal_eval(key)["column_name"]
+            df = df[df[filter_id] == value["children"]]
+    # Returning the df
+    return df
+
+
+filter_manager.register_inputs_outputs(
+    Input(
+        {"type": "binary_filter", "id": ALL, "column_name": ALL, "sub_type": "value"},
+        "children",
+    )
+)
