@@ -106,6 +106,16 @@ def create_dpr_output(dfs, components_data):
 filter_manager.register_inputs_outputs(
     Output({"type": "date_picker_range", "column_name": ALL, "id": ALL}, "start_date"),
     Output({"type": "date_picker_range", "column_name": ALL, "id": ALL}, "end_date"),
+    Output(
+        {"type": "date_picker_range", "column_name": ALL, "id": ALL}, "min_date_allowed"
+    ),
+    Output(
+        {"type": "date_picker_range", "column_name": ALL, "id": ALL}, "max_date_allowed"
+    ),
+    Output(
+        {"type": "date_picker_range", "column_name": ALL, "id": ALL},
+        "initial_visible_month",
+    ),
     Input({"type": "date_picker_range", "column_name": ALL, "id": ALL}, "start_date"),
     Input({"type": "date_picker_range", "column_name": ALL, "id": ALL}, "end_date"),
 )

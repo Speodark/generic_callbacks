@@ -33,7 +33,8 @@ class Filter_Manager:
         if not self._initiated:
             self.df = df
             dash.callback(
-                *[*self._outputs,*self._inputs]
+                *[*self._outputs,*self._inputs],
+                prevent_initial_call=True
             )(self.dashboard_update)
 
     
@@ -218,5 +219,6 @@ class Filter_Manager:
                         outputs.append(component)
                 else:
                     outputs.append(components_of_type)
+                    
         # returning the outputs Finishing the callback
         return outputs
